@@ -91,26 +91,46 @@ const render = () => {
       (filter === "" || m.layanan === filter)
     );
 
-  filtered.forEach(m => {
-    tableBody.innerHTML += `
-      <tr>
-        <td>${m.kode}</td>
-        <td>${m.nama}</td>
-        <td>${m.email}</td>
-        <td>${m.hp}</td>
-        <td>${m.usia}</td>
-        <td>${m.layanan}</td>
-        <td>${m.tanggal}</td>
-        <td>Rp ${Number(m.harga).toLocaleString()}</td>
-        <td>${m.durasi} Bulan</td>
-        <td>
-          <button data-action="edit" data-index="${m.index}">Edit</button>
-          <button data-action="delete" data-index="${m.index}">Hapus</button>
-        </td>
-      </tr>
-    `;
-  });
+    filtered.forEach(m => {
 
+      // CEK apakah di halaman index (tabel sederhana)
+      const isIndexPage = !document.getElementById("memberForm");
+    
+      if (isIndexPage) {
+        tableBody.innerHTML += `
+          <tr>
+            <td>${m.kode}</td>
+            <td>${m.nama}</td>
+            <td>${m.layanan}</td>
+            <td>${m.tanggal}</td>
+            <td>Rp ${Number(m.harga).toLocaleString()}</td>
+            <td>
+              <button data-action="delete" data-index="${m.index}">Hapus</button>
+            </td>
+          </tr>
+        `;
+      } else {
+        // halaman member.html (full data)
+        tableBody.innerHTML += `
+          <tr>
+            <td>${m.kode}</td>
+            <td>${m.nama}</td>
+            <td>${m.email}</td>
+            <td>${m.hp}</td>
+            <td>${m.usia}</td>
+            <td>${m.layanan}</td>
+            <td>${m.tanggal}</td>
+            <td>Rp ${Number(m.harga).toLocaleString()}</td>
+            <td>${m.durasi} Bulan</td>
+            <td>
+              <button data-action="edit" data-index="${m.index}">Edit</button>
+              <button data-action="delete" data-index="${m.index}">Hapus</button>
+            </td>
+          </tr>
+        `;
+      }
+    
+    });
   updateStats();
 };
 
