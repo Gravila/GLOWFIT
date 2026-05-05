@@ -3,7 +3,7 @@ const searchToggle = document.getElementById("searchToggle");
 const navSearchBox = document.querySelector(".nav-search");
 const navSearch = document.getElementById("navSearch");
 
-if (searchToggle) {
+if (searchToggle && navSearch) {
   searchToggle.addEventListener("click", () => {
     navSearchBox.classList.toggle("active");
     navSearch.focus();
@@ -17,11 +17,10 @@ let editIndex = null;
 // ================= ELEMENT =================
 const form = document.getElementById("memberForm");
 const tableBody = document.getElementById("tableBody");
-
 const searchInput = document.getElementById("search");
 const filterSelect = document.getElementById("filter");
 
-// form input
+// Elemen form (hanya ada di halaman member)
 const nama = document.getElementById("nama");
 const email = document.getElementById("emailmember");
 const hp = document.getElementById("noHP");
@@ -29,199 +28,123 @@ const usia = document.getElementById("usiamember");
 const layanan = document.getElementById("layanan");
 const tanggal = document.getElementById("tanggal");
 const harga = document.getElementById("harga");
-
-// ================= AUTO HARGA =================
-const hargaPaket = {
-  Basic: 100000,
-  Premium: 200000,
-  VIP: 350000
-};
-
 const durasiSelect = document.getElementById("durasi");
 
-layanan.addEventListener("change", updateHarga);
-durasiSelect.addEventListener("change", updateHarga);
+// ================= AUTO HARGA =================
+const hargaPaket = { Basic: 100000, Premium: 200000, VIP: 350000 };
+
+if (layanan && durasiSelect) {
+  layanan.addEventListener("change", updateHarga);
+  durasiSelect.addEventListener("change", updateHarga);
+}
 
 function updateHarga() {
+  if (!layanan || !durasiSelect || !harga) return;
   const paket = layanan.value;
   const durasi = durasiSelect.value;
-
-  if (!paket || !durasi) {
-    harga.value = "";
-    return;
-  }
-
-  const base = hargaPaket[paket];
-  harga.value = base * parseInt(durasi);
+  if (!paket || !durasi) { harga.value = ""; return; }
+  harga.value = hargaPaket[paket] * parseInt(durasi);
 }
-// ================= GENERATE KODE =================
-const generateKode = () => {
-  return "GF" + Math.floor(1000 + Math.random() * 9000);
-};
-
-// ================= VALIDASI =================
-const validate = () => {
-  if (!nama.value.trim()) return alert("Nama wajib diisi!"), false;
-  if (!email.value.trim()) return alert("Email wajib diisi!"), false;
-  if (!hp.value.trim()) return alert("No HP wajib diisi!"), false;
-  if (!usia.value.trim()) return alert("Usia wajib diisi!"), false;
-  if (!layanan.value) return alert("Pilih layanan!"), false;
-  if (!tanggal.value) return alert("Tanggal wajib diisi!"), false;
-
-  return true;
-};
-
-// ================= SAVE LOCALSTORAGE =================
-const saveData = () => {
-  localStorage.setItem("members", JSON.stringify(members));
-};
 
 // ================= RENDER TABLE =================
 const render = () => {
-  const keyword = searchInput.value.toLowerCase();
-  const filter = filterSelect.value;
+  if (!tableBody) return;
+
+  const keyword = searchInput ? searchInput.value.toLowerCase() : "";
+  const filter = filterSelect ? filterSelect.value : "";
 
   tableBody.innerHTML = "";
 
   const filtered = members
     .map((m, i) => ({ ...m, index: i }))
     .filter(m =>
-      (m.nama.toLowerCase().includes(keyword) ||
-       m.kode.toLowerCase().includes(keyword)) &&
+      (m.nama.toLowerCase().includes(keyword) || m.kode.toLowerCase().includes(keyword)) &&
       (filter === "" || m.layanan === filter)
     );
-//tes
-    filtered.forEach(m => {
 
-      // CEK apakah di halaman index (tabel sederhana)
-      const isIndexPage = !document.getElementById("memberForm");
-    
-      if (isIndexPage) {
-        tableBody.innerHTML += `
-          <tr>
-            <td>${m.kode}</td>
-            <td>${m.nama}</td>
-            <td>${m.layanan}</td>
-            <td>${m.tanggal}</td>
-            <td>Rp ${Number(m.harga).toLocaleString()}</td>
-            <td>
-              <button data-action="delete" data-index="${m.index}">Hapus</button>
-            </td>
-          </tr>
-        `;
-      } else {
-        // halaman member.html (full data)
-        tableBody.innerHTML += `
-          <tr>
-            <td>${m.kode}</td>
-            <td>${m.nama}</td>
-            <td>${m.email}</td>
-            <td>${m.hp}</td>
-            <td>${m.usia}</td>
-            <td>${m.layanan}</td>
-            <td>${m.tanggal}</td>
-            <td>Rp ${Number(m.harga).toLocaleString()}</td>
-            <td>${m.durasi} Bulan</td>
-            <td>
-              <button data-action="edit" data-index="${m.index}">Edit</button>
-              <button data-action="delete" data-index="${m.index}">Hapus</button>
-            </td>
-          </tr>
-        `;
-      }
-    
-    });
+  filtered.forEach(m => {
+    const isIndexPage = !document.getElementById("memberForm");
+    if (isIndexPage) {
+      tableBody.innerHTML += `
+        <tr>
+          <td>${m.kode}</td><td>${m.nama}</td><td>${m.layanan}</td>
+          <td>${m.tanggal}</td><td>Rp ${Number(m.harga).toLocaleString()}</td>
+          <td><button data-action="delete" data-index="${m.index}">Hapus</button></td>
+        </tr>`;
+    } else {
+      tableBody.innerHTML += `
+        <tr>
+          <td>${m.kode}</td><td>${m.nama}</td><td>${m.email}</td><td>${m.hp}</td>
+          <td>${m.usia}</td><td>${m.layanan}</td><td>${m.tanggal}</td>
+          <td>Rp ${Number(m.harga).toLocaleString()}</td><td>${m.durasi} Bln</td>
+          <td>
+            <button data-action="edit" data-index="${m.index}">Edit</button>
+            <button data-action="delete" data-index="${m.index}">Hapus</button>
+          </td>
+        </tr>`;
+    }
+  });
   updateStats();
 };
 
 // ================= STATISTIK =================
 const updateStats = () => {
-  document.getElementById("total").textContent = members.length;
+  const totalEl = document.getElementById("total");
+  const stokEl = document.getElementById("stok");
 
-  const count = members.reduce((acc, m) => {
-    acc[m.layanan] = (acc[m.layanan] || 0) + 1;
-    return acc;
-  }, {});
+  if (totalEl) totalEl.textContent = members.length;
 
-  document.getElementById("stok").innerHTML =
-    Object.entries(count)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join("<br>");
+  if (stokEl) {
+    const count = members.reduce((acc, m) => {
+      acc[m.layanan] = (acc[m.layanan] || 0) + 1;
+      return acc;
+    }, {});
+    stokEl.innerHTML = Object.entries(count).map(([k, v]) => `${k}: ${v}`).join("<br>");
+  }
 };
 
-// ================= SUBMIT (ADD + EDIT) =================
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+// ================= SUBMIT, EDIT, DELETE =================
+if (form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // Tambahkan fungsi validate() dan generateKode() milikmu di sini
+    const data = {
+      kode: editIndex === null ? "GF" + Math.floor(1000 + Math.random() * 9000) : members[editIndex].kode,
+      nama: nama.value, email: email.value, hp: hp.value,
+      usia: usia.value, layanan: layanan.value, durasi: durasiSelect.value,
+      tanggal: tanggal.value, harga: harga.value
+    };
+    if (editIndex !== null) { members[editIndex] = data; editIndex = null; }
+    else { members.push(data); }
+    localStorage.setItem("members", JSON.stringify(members));
+    form.reset(); render();
+  });
+}
 
-  if (!validate()) return;
-
-  const data = {
-    kode: editIndex === null ? generateKode() : members[editIndex].kode,
-    nama: nama.value,
-    email: email.value,
-    hp: hp.value,
-    usia: usia.value,
-    layanan: layanan.value,
-    durasi: durasiSelect.value,   // 🔥 TAMBAHAN
-    tanggal: tanggal.value,
-    harga: harga.value
-  };
-
-  if (editIndex !== null) {
-    members[editIndex] = data;
-    editIndex = null;
-  } else {
-    members.push(data);
-  }
-
-  saveData();
-  form.reset();
-  harga.value = "";
-
-  render();
-});
-
-// ================= EDIT & DELETE =================
-tableBody.addEventListener("click", (e) => {
-  const index = e.target.dataset.index;
-  const action = e.target.dataset.action;
-
-  if (!action) return;
-
-  // EDIT
-  if (action === "edit") {
-    const m = members[index];
-
-    nama.value = m.nama;
-    email.value = m.email;
-    hp.value = m.hp;
-    usia.value = m.usia;
-    layanan.value = m.layanan;
-    tanggal.value = m.tanggal;
-    harga.value = m.harga;
-
-    editIndex = index;
-  }
-
-  // DELETE
-  if (action === "delete") {
-    if (confirm("Yakin hapus data ini?")) {
+if (tableBody) {
+  tableBody.addEventListener("click", (e) => {
+    const { index, action } = e.target.dataset;
+    if (!action) return;
+    if (action === "delete" && confirm("Hapus data?")) {
       members.splice(index, 1);
-      saveData();
+      localStorage.setItem("members", JSON.stringify(members));
       render();
+    } else if (action === "edit" && nama) {
+      const m = members[index];
+      nama.value = m.nama; email.value = m.email; // ...dst mengisi form
+      editIndex = index;
     }
-  }
-});
+  });
+}
 
-// ================= SEARCH & FILTER =================
-searchInput.addEventListener("input", render);
-filterSelect.addEventListener("change", render);
+// ================= SEARCH & NAV =================
+if (searchInput) searchInput.addEventListener("input", render);
+if (filterSelect) filterSelect.addEventListener("change", render);
+if (navSearch) {
+  navSearch.addEventListener("input", () => {
+    if (searchInput) searchInput.value = navSearch.value;
+    render();
+  });
+}
 
-// ================= NAV SEARCH =================
-navSearch.addEventListener("input", () => {
-  searchInput.value = navSearch.value;
-  render();
-});
-
-// ================= INIT =================
 render();

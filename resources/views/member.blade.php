@@ -1,38 +1,6 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<title>Member Management</title>
+@extends('layouts.app')
 
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-</head>
-
-<body>
-
-<!-- NAVBAR -->
-<nav>
-  <div class="logo">
-    <img src="{{ asset('image/GLOWFIT GYM.png') }}">
-    <span>GlowFit Gym</span>
-  </div>
-
-  <div class="menu">
-    <a href="index.html">Beranda</a>
-    <a href="/member">Paket Membership</a>
-    <a href="#">Kelas GLOWFIT</a>
-    <a href="#">Kontak</a>
-  </div>
-
-  <div class="nav-search">
-    <input type="text" id="navSearch" placeholder="Cari...">
-    <button id="searchToggle">
-      <i class="fa fa-search"></i>
-    </button>
-  </div>
-</nav>
+@section('content')
 
 <div class="main-layout" style="margin-top:100px;">
 
@@ -48,7 +16,12 @@
 <div class="package-card">
 <h3>Basic</h3>
 <p class="price">Rp100.000</p>
-<ul> <li>Akses Gym</li> <li>Jam Terbatas</li> <li>Tidak termasuk kelas</li> <li> Berlaku 1 Bulan</li> </ul>
+<ul>
+<li>Akses Gym</li>
+<li>Jam Terbatas</li>
+<li>Tidak termasuk kelas</li>
+<li>Berlaku 1 Bulan</li>
+</ul>
 <button onclick="pilihPaket('Basic')">Pilih</button>
 </div>
 
@@ -56,14 +29,24 @@
 <span class="badge">BEST</span>
 <h3>Premium</h3>
 <p class="price">Rp200.000</p>
-<ul> <li>Gym + Kelas</li> <li>Zumba & Yoga</li> <li>Konsultasi Trainer</li> <li> Berlaku 1 Bulan</li> </ul>
+<ul>
+<li>Gym + Kelas</li>
+<li>Zumba & Yoga</li>
+<li>Konsultasi Trainer</li>
+<li>Berlaku 1 Bulan</li>
+</ul>
 <button onclick="pilihPaket('Premium')">Pilih</button>
 </div>
 
 <div class="package-card">
 <h3>VIP</h3>
 <p class="price">Rp350.000</p>
-<ul> <li>Semua Akses</li> <li>Personal Trainer</li> <li>Prioritas Booking</li> <li> Berlaku 1 Bulan</li> </ul>
+<ul>
+<li>Semua Akses</li>
+<li>Personal Trainer</li>
+<li>Prioritas Booking</li>
+<li>Berlaku 1 Bulan</li>
+</ul>
 <button onclick="pilihPaket('VIP')">Pilih</button>
 </div>
 
@@ -89,15 +72,16 @@
 </select>
 
 <select id="durasi">
-  <option value="">Pilih Durasi</option>
-  <option value="1">1 Bulan</option>
-  <option value="3">3 Bulan</option>
-  <option value="6">6 Bulan</option>
-  <option value="12">1 Tahun</option>
+<option value="">Pilih Durasi</option>
+<option value="1">1 Bulan</option>
+<option value="3">3 Bulan</option>
+<option value="6">6 Bulan</option>
+<option value="12">1 Tahun</option>
 </select>
 
 <input type="date" id="tanggal">
 <input type="number" id="harga" placeholder="Harga" readonly>
+
 <button type="submit">Simpan Member</button>
 
 </form>
@@ -108,7 +92,8 @@
 <input type="text" id="search" placeholder="Cari nama/kode...">
 
 <!-- TABLE -->
- <h3>Data Member</h3>
+<h3>Data Member</h3>
+
 <table>
 <thead>
 <tr>
@@ -136,13 +121,9 @@
 <div class="stat-section">
 <h3>Statistik</h3>
 
-<div class="stat-box pink">
-Total Member: <span id="total"></span>
-</div>
+<x-stat-card judul="Total Member" nilai="0" warna="pink"/>
+<x-stat-card judul="Per Layanan" nilai="0" warna="green"/>
 
-<div class="stat-box green">
-Per Layanan: <span id="stok"></span>
-</div>
 </div>
 
 <hr>
@@ -156,12 +137,15 @@ Per Layanan: <span id="stok"></span>
 <option>Premium</option>
 <option>VIP</option>
 </select>
+
 </div>
 
 </aside>
 
 </div>
 
+@endsection
+
+@push('scripts')
 <script src="{{ asset('js/script.js') }}"></script>
-</body>
-</html>
+@endpush
