@@ -1,14 +1,26 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MemberController;
+
+
+Route::middleware('auth')->group(function () {
+    Route::resource('member', MemberController::class);
+});
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::view('/tentang', 'tentang');
-Route::get('/hitung/{a}/{b}', fn($a, $b) => $a + $b);
-Route::get('/member', function () {
-    return view('member');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+require __DIR__.'/auth.php';

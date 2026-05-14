@@ -32,6 +32,12 @@
     </div>
 </nav>
 
+<div class="user-info">
+    @auth
+        <span>Selamat Datang, {{ auth()->user()->name }}</span>
+    @endauth
+</div>
+
 <!-- HERO -->
 <section class="hero">
     <div class="overlay">
@@ -94,8 +100,35 @@
         </tr>
         </thead>
         
-        <tbody id="tableBody"></tbody>
-        </table>
+        <tbody id="tableBody">
+            @forelse($members as $m)
+                <tr>
+                    <td>{{ $m->kode_member }}</td>
+                    <td>{{ $m->nama }}</td>
+                    <td>{{ $m->layanan }}</td>
+                    <td>{{ $m->created_at->format('d-m-Y') }}</td>
+                    <td>Rp {{ number_format($m->biaya_bulanan, 0, ',', '.') }}</td>
+                    <td>
+                        {{-- Tombol Edit & Hapus untuk CRUD --}}
+                        <a href="{{ route('member.edit', $m->id) }}" class="btn-edit">Edit</a>
+                        
+                        <form action="{{ route('member.destroy', $m->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Yakin hapus member ini?')">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6">Data member masih kosong.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+    <div class="pagination-wrapper">
+        {{ $members->links() }}
+    </div>
 
 </div>
 </section>
@@ -158,6 +191,17 @@
 <p>📱 0812xxxx</p>
 </div>
 
+@if(session('success'))
+    <div style="padding: 15px; background-color: #d4edda; color: #155724; margin-bottom: 20px;">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div style="padding: 15px; background-color: #f8d7da; color: #721c24; margin-bottom: 20px;">
+        {{ session('error') }}
+    </div>
+@endif
 </footer>
 </div>
 <hr>    
