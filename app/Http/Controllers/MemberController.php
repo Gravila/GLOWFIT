@@ -5,11 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Member; // Import Model Member
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Carbon\Carbon;
 
 class MemberController extends Controller
 {
     public function index()
     {
+        // 1. Ambil data tracking dari session saat ini
+        $kunjungan = session('total_kunjungan', 0) + 1;
+        $kunjunganPertama = session('kunjungan_pertama', Carbon::now()->toDateTimeString());
+        $kunjunganTerakhir = Carbon::now()->toDateTimeString();
+
+        // 2. Masukkan kembali data terbaru ke dalam session
+        session(['total_kunjungan' => $kunjungan]);
+        session(['kunjungan_pertama' => $kunjunganPertama]);
+        session(['kunjungan_terakhir' => $kunjunganTerakhir]);
+        
         $userId = Auth::id(); 
         
         // Tambahkan Member::query() agar VS Code lebih mudah mengenalinya
@@ -69,7 +81,41 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         $member->delete();
-
+ 
         return redirect()->route('member.index')->with('success', 'Member telah berhasil dihapus!');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+    
+        $members = Member::query()
+            ->where('user_id', Auth::id())
+            ->where(function ($q) use ($query) {
+                $q->where('nama', 'LIKE', "%{$query}%")
+                  ->orWhere('kode_member', 'LIKE', "%{$query}%");
+            })
+            ->get();
+    
+        // Kembalikan dalam bentuk JSON untuk AJAX
+        return response()->json($members);
+    }
+
+    // Bagian ini adalah Implementasi Poin 3.g
+    public function saveSettings(Request $request)
+    {
+        $theme = $request->input('theme', 'light');
+        $fontSize = $request->input('font_size', 'base');
+
+        Cookie::queue('theme', $theme, 43200);
+        Cookie::queue('font_size', $fontSize, 43200);
+
+        // Mengembalikan JSON konfirmasi (Sesuai perintah 3.g)
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Preferensi berhasil disimpan!',
+            'theme' => $theme,
+            'font_size' => $fontSize
+        ]);
     }
 }

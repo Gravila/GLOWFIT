@@ -38,6 +38,34 @@
     @endauth
 </div>
 
+<button id="theme-toggle" class="p-2 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded">
+    Toggle Tema Gelap/Terang
+</button>
+
+<script>
+// Helper Functions untuk Cookie
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+// Logika Klik Tombol Toggle
+document.getElementById('theme-toggle').addEventListener('click', function() {
+    if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        setCookie('theme', 'light', 30); // Simpan 30 hari
+    } else {
+        document.documentElement.classList.add('dark');
+        setCookie('theme', 'dark', 30);
+    }
+});
+</script>
+
 <!-- HERO -->
 <section class="hero">
     <div class="overlay">
@@ -81,6 +109,93 @@
 </div>
 
 </div>
+
+<div class="mb-6 p-4 bg-white rounded-lg shadow">
+    <h3 class="text-lg font-semibold mb-2">Informasi Cuaca Gym (Surabaya)</h3>
+    <div id="loading-cuaca" class="text-gray-500">Mencari data cuaca...</div>
+    <div id="konten-cuaca" class="hidden">
+        <p><strong>Kota:</strong> <span id="nama-kota">-</span></p>
+        <p><strong>Suhu Saat Ini:</strong> <span id="suhu-cuaca">-</span>°C</p>
+        <p><strong>Kondisi:</strong> <span id="deskripsi-cuaca">-</span></p>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+    const loadingEl = document.getElementById('loading-cuaca');
+    const kontenEl = document.getElementById('konten-cuaca');
+
+    try {
+        // Ambil data menggunakan async/await
+        const response = await fetch('https://wttr.in/Surabaya?format=j1');
+        if (!response.ok) throw new Error('Gagal mengambil data cuaca');
+        
+        const data = await response.json();
+        
+        // Atur data ke elemen HTML
+        document.getElementById('nama-kota').innerText = data.nearest_area[0].areaName[0].value;
+        document.getElementById('suhu-cuaca').innerText = data.current_condition[0].temp_C;
+        document.getElementById('deskripsi-cuaca').innerText = data.current_condition[0].weatherDesc[0].value;
+
+        // Sembunyikan loading, tampilkan konten
+        loadingEl.classList.add('hidden');
+        kontenEl.classList.remove('hidden');
+    } catch (error) {
+        loadingEl.innerText = "Gagal memuat cuaca: " + error.message;
+        loadingEl.classList.remove('hidden');
+    }
+});
+</script>
+
+<div class="mb-4">
+    <input type="text" id="live-search" class="w-full p-2 border rounded" placeholder="Cari member berdasarkan nama atau kode...">
+</div>
+
+<script>
+document.getElementById('live-search').addEventListener('input', function() {
+    let query = this.value;
+
+    // Lakukan fetch data tanpa reload halaman
+    fetch(`/member/search?query=${query}`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json'
+        }
+    })
+    // Bagian ini adalah Implementasi Poin 3.f
+    fetch('{{ route("settings.save") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        '   X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            theme: temaDipilih,
+            font_size: fontDipilih
+        })
+    })
+
+    .then(response => response.json())
+    .then(data => {
+        let html = '';
+        if(data.length > 0) {
+            data.forEach(member => {
+                html += `
+                <tr>
+                    <td class="p-2 border">${member.kode_member}</td>
+                    <td class="p-2 border">${member.nama}</td>
+                    <td class="p-2 border">${member.email}</td>
+                    <td class="p-2 border">${member.layanan}</td>
+                </tr>`;
+            });
+        } else {
+            html = `<tr><td colspan="4" class="p-4 border text-center text-gray-500">Member tidak ditemukan</td></tr>`;
+        }
+        document.getElementById('tbody-members').innerHTML = html;
+    });
+});
+</script>
 
 <!-- TABLE -->
 <section class="table-section">
@@ -168,6 +283,36 @@
 </aside> 
 </div>
 
+<form id="form-pengaturan">
+    @csrf
+    <select id="select-theme" name="theme">
+        <option value="light">Terang (Light)</option>
+        <option value="dark">Gelap (Dark)</option>
+        <option value="system">Ikuti Sistem</option>
+    </select>
+
+    <select id="select-font" name="font_size">
+        <option value="small">Kecil</option>
+        <option value="base">Normal</option>
+        <option value="large">Besar</option>
+    </select>
+</form>
+
+<div class="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
+    <h4 class="font-bold text-md text-gray-800 dark:text-white">Statistik Kunjungan Anda:</h4>
+    <ul class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <li>Jumlah Kunjungan Halaman: <strong>{{ session('total_kunjungan', 1) }}</strong> kali</li>
+        <li>Kunjungan Pertama: <span>{{ session('kunjungan_pertama', '-') }}</span></li>
+        <li>Kunjungan Terakhir: <span>{{ session('kunjungan_terakhir', '-') }}</span></li>
+    </ul>
+    
+    <form action="{{ route('session.reset') }}" method="POST">
+        @csrf
+        <button type="submit" class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-xs rounded transition">
+            Reset Hitungan Kunjungan
+        </button>
+    </form>
+</div>
 <!-- FOOTER -->
 <div>
 <footer>
