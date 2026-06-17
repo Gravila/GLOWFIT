@@ -58,5 +58,6 @@ Route::post('/booking/verify', [BookingController::class, 'verify'])->name('book
 Route::get('/booking/jadwal/{id}', [BookingController::class, 'showJadwal'])->name('pilih.jadwal');
 
 Route::post('/booking/proses-final', [BookingController::class, 'prosesFinal'])->name('booking.proses_final');
+Route::get('/cek-booking', [BookingController::class, 'cekBooking'])->name('cek.booking');
 
 require __DIR__.'/auth.php';

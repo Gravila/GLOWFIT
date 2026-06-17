@@ -12,6 +12,16 @@
 </div>
 <div style="margin-top: 80px; padding: 20px; font-family: 'Poppins', sans-serif;">
     <h1 style="text-align: center; color: #1B1717;">Jadwal Kelas GlowFit</h1>
+    <div style="max-width: 500px; margin: 20px auto; text-align: center;">
+        <form action="{{ route('cek.booking') }}" method="GET" style="display: flex; gap: 5px;">
+            <input type="text" name="kode_member" placeholder="Masukkan Kode Member untuk cek jadwal..." 
+                   style="flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 10px;">
+            
+            <button type="submit" style="padding: 10px 20px; background: #810100; color: white; border: none; border-radius: 10px; cursor: pointer;">
+                🔍 Cari
+            </button>
+        </form>
+    </div>
     <div style="text-align: center; margin-bottom: 50px;">
         <p style="color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
             Pilih kelas favoritmu dan mulai perjalanan kebugaranmu hari ini! 

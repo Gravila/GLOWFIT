@@ -98,4 +98,39 @@ public function prosesFinal(Request $request)
         'message' => "Anda berhasil memilih kelas " . $jadwalData->nama_kelas . " pada hari " . $jadwalData->hari ."."
     ]);
 }
+public function cekBooking(Request $request)
+{
+    $riwayat = collect(); 
+    $member = null;
+
+    if ($request->filled('kode_member')) {
+        $member = DB::table('members')->where('kode_member', $request->kode_member)->first();
+        
+        if ($member) {
+            // Ambil data
+            $riwayat = DB::table('member_kelas')
+                ->where('member_id', $member->id)
+                ->get();
+
+            // Tambahkan status secara manual ke setiap item
+            foreach ($riwayat as $item) {
+                $detail = $item->jadwal_detail ?? '';
+                $jamSelesai = '00:00';
+
+                if (str_contains($detail, ' - ')) {
+                    $jamSelesai = trim(explode(' - ', $detail)[1]);
+                }
+
+                try {
+                    $waktuSelesai = \Carbon\Carbon::createFromTimeString($jamSelesai);
+                    $item->status = (now()->greaterThan($waktuSelesai)) ? 'Berakhir' : 'Terkonfirmasi';
+                } catch (\Exception $e) {
+                    $item->status = 'Terkonfirmasi';
+                }
+            }
+        }
+    }
+
+    return view('cek_booking', compact('riwayat', 'member'));
+}
 }
