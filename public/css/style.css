@@ -81,47 +81,7 @@
 
   animation: fadeUp 1s ease;
 }
-  
-  /* SEARCH NAVBAR */
-  .nav-search{
-    display:flex;
-    align-items:center;
-    position:relative;
-  }
-  
-  .nav-search input{
-    width:0;
-    opacity:0;
-    padding:8px;
-    border-radius:20px;
-    border:none;
-    outline:none;
-    transition:0.3s;
-  }
-  
-  .nav-search.active input{
-    width:150px;
-    opacity:1;
-    margin-right:10px;
-  }
-  
-  .nav-search button{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    border:none;
-    background:rgba(255,255,255,0.2);
-    color:white;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:0.3s;
-  }
-  
-  .nav-search button:hover{
-    background:#810100;
-  }
+
   
   /* LAYOUT */
   .main-layout{
@@ -131,20 +91,13 @@
     align-items:flex-start; /* 🔥 penting */
   }
   
-  .content{
-    flex:3;
-  }
-  
-  .sidebar{
-    flex:1;
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 5px 10px rgba(0,0,0,0.1);
-  
-    position:sticky; /* 🔥 biar tetap di kanan */
-    top:100px;
-  }
+/* Tambahkan di style.css */
+.content {
+  /* Angka 100px ini sesuaikan dengan tinggi navbar kamu */
+  padding-top: 100px; 
+  min-height: 80vh; /* Agar footer tetap di bawah */
+}
+
   
 /* CARDS */
 .cards {
@@ -158,6 +111,7 @@
 }
 
 .card {
+  color: var(--text-color);
   background: white !important;
   border-radius: 15px !important; 
   overflow: hidden !important;    
@@ -297,39 +251,6 @@
     background:#630000;
   }
   
-  /* TABLE */
-  .table-section{
-    text-align:center;
-    padding:30px;
-  }
-  
-  .table-box{
-    max-width:700px;
-    margin:auto;
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 5px 10px rgba(0,0,0,0.1);
-  }
-  
-  .table-box table{
-    width:100%;
-    border-collapse:collapse;
-  }
-  
-  .table-box th{
-    background:#1B1717;
-    color:#EDEBDD;
-  }
-  
-  .table-box th, td{
-    padding:10px;
-    text-align:center;
-  }
-  
-  .table-box tr:nth-child(even){
-    background:#f5f5f5;
-  }
   
   /* FOOTER */
   footer{
@@ -1135,3 +1056,240 @@
   margin: 0 auto 15px auto; /* Margin atas:0, kiri/kanan: auto (center), bawah: 15px */
   object-fit: contain; /* Agar gambar tidak gepeng */
 }
+
+/* --- DARK MODE (Sesuaikan dengan CSS kamu) --- */
+.dark {
+  --primary-color: #D4A373;
+  --background-light: #121212; /* Background halaman */
+  --text-color: #E0E0E0;      /* Teks halaman jadi putih */
+}
+
+/* 1. Background Halaman berubah gelap */
+.dark body {
+  background-color: var(--background-light) !important;
+  color: var(--text-color) !important;
+}
+
+/* 2. KHUSUS KARTU: Biarkan tetap putih dan teks hitam */
+.dark .card,
+.dark .produk-card {
+  background-color: #ffffff !important; /* Putih */
+  color: #000000 !important;            /* Hitam */
+  border: 1px solid #ddd !important;
+}
+
+/* 3. Pastikan teks di dalam kartu tetap hitam (override warna global) */
+.dark .card h3,
+.dark .card p,
+.dark .card .teks {
+  color: #000000 !important; 
+}
+
+/* 4. Fix Navbar & Footer agar tidak menyatu dengan background */
+.dark .navbar,
+.dark .footer {
+  background-color: #2D1F1B !important;
+  color: #ffffff !important;
+}
+
+/* 5. Fix Input */
+.dark input,
+.dark select {
+  background-color: #2A2A2A !important;
+  color: var(--text-color) !important;
+  border: 1px solid #444 !important;
+}
+
+.dashboard-wrapper {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Menengahkan semua konten secara horizontal */
+}
+
+.card-row {
+  display: flex;
+  justify-content: center; /* Menengahkan kotak di dalam baris */
+  gap: 20px; /* Jarak antar kotak */
+  margin-bottom: 20px; /* Jarak antara baris atas dan bawah */
+  width: 100%;
+}
+
+.card {
+  background: white;
+  width: 200px; /* Lebar tetap agar seragam */
+  height: 180px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card h3 {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.card .count {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e63946;
+}
+
+/* Container Utama */
+.page-wrapper {
+  display: flex; 
+  gap: 20px; 
+  padding: 40px; 
+  max-width: 1200px; 
+  margin: 50px auto; /* Ubah margin ini: 50px atas/bawah, auto kiri/kanan */
+  min-height: 60vh;
+}
+/* Sidebar di sebelah kiri */
+.sidebar {
+    width: 250px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Tabel di tengah */
+.main-content {
+    flex: 0 1 700px; /* Lebar maksimal tabel agar tidak terlalu lebar */
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Stat box styling */
+.stat-box {
+    background: #8b0000;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th { background: #333; color: white; padding: 12px; }
+td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
+
+.main-content h2 {
+  text-align: center;
+  margin-bottom: 20px; /* Memberi jarak agar tidak menempel ke tabel */
+}
+
+/* Container full lebar */
+.full-page-container {
+  padding: 40px;
+  max-width: 1000px; /* Batasi agar tidak terlalu lebar di monitor besar */
+  margin: 0 auto;
+}
+
+/* Tabel agar tampil penuh */
+.jadwal-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.jadwal-table th {
+  background: #333;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.jadwal-table td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+/* Container Utama */
+.kelas-wrapper {
+  padding-top: 100px; /* Jarak agar tidak mepet navbar */
+  display: flex;
+  flex-direction: column; /* Membuat elemen ke bawah */
+  align-items: center;    /* Memposisikan semua elemen ke tengah secara horizontal */
+}
+
+/* Judul Halaman */
+.judul-halaman {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50; /* Warna gelap agar lebih elegan dari hitam pekat */
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+
+/* Container untuk 3 kotak */
+.card-container {
+  display: flex;
+  justify-content: center; /* Kotak berjejer ke samping di tengah */
+  gap: 20px;               /* Jarak antar kotak */
+  width: 60%;
+}
+
+/* Efek Hover yang halus */
+.card {
+  transition: all 0.3s ease; /* Transisi halus */
+  cursor: pointer;
+  border: 1px solid #ddd;
+  text-decoration: none;
+}
+
+.card:hover {
+  background-color: #f8f8f8; /* Berubah warna sedikit saat disentuh */
+  transform: translateY(-10px); /* Kotak sedikit naik ke atas */
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15); /* Bayangan lebih dalam */
+  border-color: #d4af37; /* Garis tepi berubah jadi warna emas */
+}
+
+/* Judul di dalam Kartu */
+.card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #8b0000;
+}
+
+/* Deskripsi di dalam Kartu */
+.card p {
+  font-size: 14px;
+  font-weight: 300;
+  color: #7f8c8d; /* Warna abu-abu lembut agar tidak terlalu kontras */
+  margin: 0;
+}
+
+
+/* Styling tombol ala 'Pill' dengan warna Maroon */
+.btn-maroon {
+  background-color: #800000; /* Warna Maroon */
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 50px; /* Membuat ujungnya sangat melengkung */
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.btn-maroon:hover {
+  background-color: #a50000; /* Warna sedikit lebih terang saat di-hover */
+  color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+

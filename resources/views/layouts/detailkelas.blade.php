@@ -5,35 +5,46 @@
     <title>GLOWFIT GYM</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     @include('partials.theme-script')
     {{-- Navigasi Otomatis --}}
     @include('layouts.adminnavigation')
 
-    <section class="hero">
-        <div>
-            <h1>BUILD YOUR DREAM BODY</h1>
-            <p>Latihan lebih sehat bersama GlowFit Gym</p>
-        </div>
-    </section>
-    <div class="dashboard-wrapper">
-        <h2 class="dashboard-title">Dashboard Admin GlowFit</h2>
-        
-        <div class="card-row">
-            <div class="card"><h3>Total Member</h3><p class="count">{{ $data['totalMember'] }}</p></div>
-            <div class="card"><h3>Kelas Aktif</h3><p class="count">{{ $data['kelasAktif'] }}</p></div>
-            <div class="card"><h3>Booking Pending</h3><p class="count">{{ $data['bookingPending'] }}</p></div>
-        </div>
-        
-        <div class="card-row">
-            <div class="card"><h3>Total Pendapatan</h3><p class="count">Rp {{ number_format($data['totalPendapatan'], 0, ',', '.') }}</p></div>
-            <div class="card"><h3>Member Baru</h3><p class="count">{{ $data['memberBaru'] }}</p></div>
-        </div>
+    @section('content')
+    <div class="page-container" style="padding: 50px;">
+        <h2>Jadwal Khusus: {{ $nama_kelas }}</h2>
+        <a href="{{ route('admin.kelas.index') }}">Kembali ke menu utama</a>
+    
+        <table class="jadwal-table" style="width: 100%; margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th>Hari</th>
+                    <th>Jam</th>
+                    <th>Instruktur</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($jadwal as $j)
+                <tr>
+                    <td>{{ $j->hari }}</td>
+                    <td>{{ $j->jam }}</td>
+                    <td>{{ $j->instruktur }}</td>
+                    <td>
+                        <form action="{{ route('admin.kelas.destroy', $j->id) }}" method="POST">
+                            @csrf @method('DELETE')
+                            <button type="submit">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-
-{{-- Footer --}}
-<footer style="background-color: #1B1717 !important; color: #EDEBDD !important; padding: 40px 80px; font-family: 'Poppins', sans-serif; margin-top: 60px; display: block; clear: both;">
+   {{-- Footer --}}
+   <footer style="background-color: #1B1717 !important; color: #EDEBDD !important; padding: 40px 80px; font-family: 'Poppins', sans-serif; margin-top: 60px; display: block; clear: both;">
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; max-width: 1200px; margin: 0 auto;">
         
         <div style="flex: 1; min-width: 200px;">
@@ -67,4 +78,3 @@
         </div>
     </div>
 </footer>
-</body>

@@ -16,11 +16,12 @@ class CekAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        // Cek apakah user sudah login dan apakah rolenya admin
-        if (Auth::check() && Auth::user()->role == 'admin') {
-            return $next($request);
+        // Jika user login DAN role-nya adalah 'admin', izinkan masuk
+        if (Auth::check() && Auth::user()->role === 'user') {
+            return $next($request); 
         }
     
-        return redirect('/')->with('error', 'Anda tidak memiliki akses admin.');
+        // Jika bukan admin, tendang ke dashboard biasa (bukan ke area admin)
+        return redirect('/dashboard')->with('error', 'Akses ditolak!');
     }
 }

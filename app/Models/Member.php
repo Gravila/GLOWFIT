@@ -13,10 +13,10 @@ class Member extends Model
         'durasi_kontrak', 'kode_member', 'status_aktif', 'user_id'
     ];
 
-    protected $casts = [
-        'status_aktif' => 'boolean',
-        'biaya_bulanan' => 'double',
-    ];
+    // protected $casts = [
+    //     'status_aktif' => 'boolean',
+    //     'biaya_bulanan' => 'double',
+    // ];
 
     // Local Scope untuk mencari member yang masih aktif
     public function scopeAktif($query)

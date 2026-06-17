@@ -1,5 +1,5 @@
 @extends('layouts.kelas') {{-- Pastikan layout ini adalah file yang benar --}}
-
+@include('partials.theme-script')
 @section('content')
 
 <div class="search-box-wrapper" style="display: flex; align-items: center; gap: 10px;">

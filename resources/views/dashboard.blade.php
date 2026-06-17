@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@include('partials.theme-script')
 @section('content')
 
     <div class="main-layout">
@@ -16,3 +16,4 @@
         </div>
     </div>
 @endsection
+

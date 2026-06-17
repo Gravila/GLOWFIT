@@ -24,6 +24,14 @@
                 @csrf
 
                 <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter your full name" required>
+                    @error('name')
+                        <span class="error-msg">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label for="email">E-mail</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Enter your e-mail" required autofocus>
                     @error('email')

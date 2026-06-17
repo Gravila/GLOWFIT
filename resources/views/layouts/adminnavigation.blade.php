@@ -1,18 +1,16 @@
-@include('partials.theme-script')
+
 <nav class="navbar">
     <div class="logo" style="display: flex; align-items: center; gap: 15px;">
-        <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; text-decoration: none; gap: 15px;">
+        <a href="{{ route('admin.dashboard') }}" style="display: flex; align-items: center; text-decoration: none; gap: 15px;">
             <span style="color: #EDEBDD; font-size: 20px; font-weight: 600; font-family: 'Poppins', sans-serif;">GlowFit Gym</span>
             <img src="{{ asset('image/GLOWFIT GYM.png') }}" alt="Logo" style="height: 35px; width: auto; object-fit: contain;">
         </a>
     </div>
     
     <div class="menu" style="display: flex; align-items: center; gap: 25px; font-family: 'Poppins', sans-serif;">
-        <a href="{{ route('dashboard') }}" style="color: #EDEBDD; text-decoration: none;">Beranda</a>
-        <a href="{{ route('member.index') }}" style="color: #EDEBDD; text-decoration: none;">Paket Membership</a>
-        <a href="{{ route('kelasglowfit') }}" style="color: #EDEBDD; text-decoration: none;">Kelas GLOWFIT</a>
-        <a href="{{ route('kontak') }}" style="color: #EDEBDD; text-decoration: none;">Kontak</a>
-        <a href="{{ route('setting') }}" style="color: #EDEBDD; text-decoration: none;">Setting</a>
+        <a href="{{ route('admin.dashboard') }}" style="color: #EDEBDD; text-decoration: none;">Beranda</a>
+        <a href="{{ route('admin.member.index') }}" style="color: #EDEBDD; text-decoration: none;">Member</a>
+        <a href="{{ route('admin.kelas.index') }}" style="color: #EDEBDD; text-decoration: none;">Kelas GLOWFIT</a>
     </div>
 
     <div class="navbar-auth">

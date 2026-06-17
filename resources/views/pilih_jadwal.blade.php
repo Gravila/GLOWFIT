@@ -1,5 +1,5 @@
 @extends('layouts.jadwal')
-
+@include('partials.theme-script')
 @section('content')
 <div style="max-width: 800px; margin: 50px auto; padding: 20px;">
     <h1 style="text-align: center; margin-bottom: 30px; color: #1B1717;">Pilih Jadwal untuk {{ $kelas->nama_kelas }}</h1>

@@ -1,5 +1,5 @@
 @extends('layouts.mainkontak')
-
+@include('partials.theme-script')
 @section('content')
 
 <div style="display: flex; align-items: center; justify-content: center; height: 80vh; font-family: 'Poppins', sans-serif; padding-top: 50px;">

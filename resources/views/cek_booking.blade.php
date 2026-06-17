@@ -1,5 +1,5 @@
 @extends('layouts.kelas')
-
+@include('partials.theme-script')
 @section('content')
 <div style="margin-top: 100px; padding: 20px; font-family: 'Poppins', sans-serif; max-width: 800px; margin: 100px auto;">
     

@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    @include('partials.theme-script')
     @include('layouts.navigation')
 
             @yield('content')
@@ -46,6 +47,28 @@
                 </div>
             </div>
         </footer>
+        <script>
+            // 1. Fungsi untuk mengubah tema
+            function toggleTheme() {
+                const html = document.documentElement; // Mengambil tag <html>
+                html.classList.toggle('dark');
+                
+                // Simpan preferensi user ke localStorage agar tidak berubah saat pindah halaman
+                if (html.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+        
+            // 2. Fungsi untuk memuat tema saat halaman dibuka
+            (function() {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                }
+            })();
+        </script>
 </body>
 </html>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -24,20 +24,22 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+    // 1. Proses autentikasi bawaan Laravel
         $request->authenticate();
 
+    // 2. Regenerate session untuk keamanan
         $request->session()->regenerate();
 
-        // Mengalihkan pengguna ke halaman dashboard utama setelah sukses login
-        return redirect()->intended(route('dashboard', absolute: false));
+// 3. LOGIKA REDIRECT BERDASARKAN ROLE
+// Kita cek apakah user yang login punya role 'admin'
+    if (Auth::user()->role === 'admin') {
+        return redirect()->intended('Admin.dashboardadmin'); // Admin ke dashboard admin
     }
 
-/**
-     * Menghancurkan sesi otentikasi (Logout).
-     */
-/**
-     * Destroy an authenticated session (Proses Logout Admin).
-     */
+// Jika bukan admin (member/user), arahkan ke dashboard member/beranda
+    return redirect()->intended('/dashboard');
+    }
+    
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
@@ -48,4 +50,5 @@ class AuthenticatedSessionController extends Controller
         // Mengarahkan ke Halaman Beranda setelah logout
         return redirect('/'); 
     }
+
 }
