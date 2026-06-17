@@ -9,14 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up() {
+        // Ubah 'bookings' menjadi 'member_kelas'
         Schema::create('member_kelas', function (Blueprint $table) {
             $table->id();
-            // member_id merujuk ke id di tabel members
-            $table->foreignId('member_id')->constrained()->onDelete('cascade');
-            // kelas_gym_id merujuk ke id di tabel kelas_gyms
-            $table->foreignId('kelas_gym_id')->constrained()->onDelete('cascade');
+            $table->string('member_id'); // ID member
+            $table->string('kelas_gym_id'); // ID jadwal/kelas
+            $table->string('nama_member'); // Tambahkan kolom agar sesuai
+            $table->string('nama_kelas');  // Tambahkan kolom agar sesuai
+            $table->string('jadwal_detail'); // Tambahkan kolom agar sesuai
             $table->timestamps();
         });
     }

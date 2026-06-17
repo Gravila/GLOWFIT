@@ -12,15 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('members', function (Blueprint $table) {
-            $table->id();
-            $table->string('kode_member', 10)->unique(); // Pengganti NIM
+            $table->id(); // Ini penting agar ada ID unik (Primary Key)
+            $table->string('kode_member', 50)->unique(); 
             $table->string('nama');
             $table->string('email')->unique();
-            $table->enum('layanan', ['Basic', 'Premium', 'VIP']); // Pengganti Jurusan
-            $table->decimal('biaya_bulanan', 10, 2); // Pengganti IPK
-            $table->integer('durasi_kontrak'); // Pengganti Semester
-            $table->boolean('status_aktif')->default(true); // Pengganti Aktif
-            $table->string('foto')->nullable();
+            $table->string('no_hp', 20); // TAMBAHKAN KOLOM INI
+            $table->integer('usia')->nullable(); // Tambahkan jika perlu
+            $table->string('layanan'); 
+            $table->decimal('biaya_bulanan', 15, 2); 
+            $table->string('durasi_kontrak'); 
+            $table->string('status_aktif');
+            $table->string('foto')->nullable(); // Tambahkan jika perlu
+            $table->unsignedBigInteger('user_id')->nullable(); // Tambahkan jika perlu
             $table->timestamps();
         });
     }

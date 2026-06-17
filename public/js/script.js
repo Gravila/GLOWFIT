@@ -31,7 +31,7 @@ const harga = document.getElementById("harga");
 const durasiSelect = document.getElementById("durasi");
 
 // ================= AUTO HARGA =================
-const hargaPaket = { Basic: 100000, Premium: 200000, VIP: 350000 };
+const hargaPaket = { basic: 100000, premium: 200000, vip: 350000 };
 
 if (layanan && durasiSelect) {
   layanan.addEventListener("change", updateHarga);
@@ -39,11 +39,14 @@ if (layanan && durasiSelect) {
 }
 
 function updateHarga() {
-  if (!layanan || !durasiSelect || !harga) return;
   const paket = layanan.value;
-  const durasi = durasiSelect.value;
-  if (!paket || !durasi) { harga.value = ""; return; }
-  harga.value = hargaPaket[paket] * parseInt(durasi);
+  const durasi = parseInt(durasiSelect.value); // Ambil angka 1, 3, 6, 12
+
+  if (paket && durasi) {
+      harga.value = hargaPaket[paket] * durasi;
+  } else {
+      harga.value = "";
+  }
 }
 
 // ================= RENDER TABLE =================

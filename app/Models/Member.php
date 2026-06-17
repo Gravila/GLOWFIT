@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     use HasFactory;
-    protected $fillable = ['nama', 'email', 'hp', 'usia', 'tgl_lahir', 'layanan'];
+    protected $fillable = [
+        'nama', 'email', 'no_hp', 'layanan', 'biaya_bulanan', 
+        'durasi_kontrak', 'kode_member', 'status_aktif', 'user_id'
+    ];
 
     protected $casts = [
         'status_aktif' => 'boolean',

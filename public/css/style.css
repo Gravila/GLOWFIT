@@ -531,71 +531,64 @@
     margin-bottom:30px;
   }
   
-  /* CARD CONTAINER */
-  .package-cards{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-  }
-  
-  /* CARD */
-  .package-card{
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    width:250px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-    position:relative;
-  }
-  
-  /* HOVER EFFECT */
-  .package-card:hover{
-    transform:translateY(-10px) scale(1.05);
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-  }
-  
-  /* TITLE */
-  .package-card h3{
-    color:#630000;
-  }
-  
-  /* PRICE */
-  .price{
-    font-size:24px;
-    font-weight:bold;
-    margin:10px 0;
-    color:#810100;
-  }
-  
-  /* LIST */
-  .package-card ul{
-    list-style:none;
-    padding:0;
-    margin:15px 0;
-  }
-  
-  .package-card ul li{
-    margin:5px 0;
-  }
-  
-  /* BUTTON */
-  .package-card button{
-    background:#810100;
-    color:white;
-    border:none;
-    padding:10px;
-    border-radius:10px;
-    cursor:pointer;
-    width:100%;
-    font-weight:bold;
-    transition:0.3s;
-  }
-  
-  .package-card button:hover{
-    background:#630000;
-  }
+/* Container Paket */
+.package-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.package-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px; /* Lengkungan lebih halus */
+  width: 280px;
+  text-align: center;
+  border: 2px solid #eee;
+  transition: all 0.4s ease; /* Transisi halus */
+  position: relative;
+}
+
+/* Efek saat kursor diarahkan (Hover) */
+.package-card:hover {
+  transform: translateY(-15px); /* Kartu naik sedikit */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* Bayangan lebih dalam */
+  border-color: #810100; /* Warna merah brand kamu */
+}
+
+/* Gaya Harga */
+.package-card h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #810100;
+  margin-bottom: 20px;
+}
+
+/* Tombol Pilih */
+.package-card button {
+  background: #810100;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 30px; /* Tombol melengkung */
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.package-card button:hover {
+  background: #a00200;
+  transform: scale(1.05);
+}
   
   /* BEST BADGE */
   .package-card.best{
@@ -1133,4 +1126,12 @@
 .benefit-card p {
   font-size: 0.9rem;
   color: #666;
+}
+
+.card-icon {
+  width: 150px;      /* Atur ukuran ikon sesuai keinginan */
+  height: 150px;
+  display: block;   /* Membuat gambar menjadi block element */
+  margin: 0 auto 15px auto; /* Margin atas:0, kiri/kanan: auto (center), bawah: 15px */
+  object-fit: contain; /* Agar gambar tidak gepeng */
 }
