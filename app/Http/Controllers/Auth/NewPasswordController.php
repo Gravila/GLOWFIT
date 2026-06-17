@@ -3,21 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Auth\Events\PasswordReset;
+use App\Models\User; // Pemanggilan model terpisah dengan benar
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class NewPasswordController extends Controller
 {
     /**
-     * Display the password reset view.
+     * Menampilkan halaman reset password.
      */
     public function create(Request $request): View
     {
@@ -25,39 +20,40 @@ class NewPasswordController extends Controller
     }
 
     /**
-     * Handle an incoming new password request.
-     *
-     * @throws ValidationException
+     * Menangani pembaruan password langsung ke database (Standar Laravel 11).
      */
     public function store(Request $request): RedirectResponse
     {
+        // 1. Validasi Input Sisi Server sesuai kriteria RTM UAS
         $request->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'email', 'exists:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'email.required' => 'Kolom E-mail wajib diisi.',
+            'email.email' => 'Format E-mail tidak valid.',
+            'email.exists' => 'E-mail ini tidak terdaftar di sistem kami.',
+            'password.required' => 'Kolom Password Baru wajib diisi.',
+            'password.min' => 'Password minimal harus terdiri dari 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password baru tidak cocok.'
         ]);
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                    'remember_token' => Str::random(60),
-                ])->save();
+        try {
+            // 2. Mengambil data user berdasarkan input email
+            $user = User::whereEmail($request->email)->first();
 
-                event(new PasswordReset($user));
+            if (!$user) {
+                return back()->withInput()->withErrors(['email' => 'Pengguna tidak ditemukan.']);
             }
-        );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
-        return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+            // 3. Menyimpan password baru ke model Laravel 11 PHP Attributes
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            // 4. Kembali ke login dengan flash session sukses
+            return redirect()->route('login')->with('status', 'Password berhasil diperbarui! Silakan log in.');
+
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['email' => 'Terjadi kesalahan sistem: ' . $e->getMessage()]);
+        }
     }
 }

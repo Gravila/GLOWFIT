@@ -1,30 +1,144 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <title>GLOWFIT GYM</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    {{-- Navigasi Otomatis --}}
+    @include('layouts.navigation')
+    
+    <main>
+        <div class="package-section" style="padding-top: 120px;"> <h2>Pilih Paket Membership</h2>
+            <div class="package-cards">
+                <div class="package-card">
+                    <h3>Basic</h3>
+                    <div class="price">Rp100.000</div>
+                    <ul>
+                        <li>Akses Gym</li>
+                        <li>Jam Terbatas</li>
+                        <li>Tidak termasuk kelas</li>
+                        <li>Berlaki 1 Bulan</li>
+                    </ul>
+                </div>
+        
+                <div class="package-card best">
+                    <span class="badge">BEST</span>
+                    <h3>Premium</h3>
+                    <div class="price">Rp200.000</div>
+                    <ul>
+                        <li>Akses Gym</li>
+                        <li>Zumba/Yoga</li>
+                        <li>Konsultasi Trainer</li>
+                        <li>Berlaki 1 Bulan</li>
+                    </ul>
+                </div>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
+                <div class="package-card vip">
+                    <h3>VIP</h3>
+                    <div class="price">Rp300.000</div>
+                    <ul>
+                        <li>Akses Gym</li>
+                        <li>Zumba & Yoga</li>
+                        <li>Personal Trainer</li>
+                        <li>Konsultasi Trainer</li>
+                        <li>Prioritas Booking</li>
+                        <li>Berlaki 1 Bulan</li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+        
+            <div class="benefits-section">
+                <h2>KEUNTUNGAN MENJADI MEMBER</h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <h3>Akses Gym Sepuasnya</h3>
+                        <p>Area cardio, angkat beban, dan latihan fungsional untuk setiap sesi olahraga.</p>
+                    </div>
+            
+                    <div class="benefit-card">
+                        <h3>Minuman Gratis</h3>
+                        <p>Tersedia kopi, teh, dan minuman segar lainnya secara gratis.</p>
+                    </div>
+            
+                    <div class="benefit-card">
+                        <h3>Fasilitas Pemulihan</h3>
+                        <p>Tersedia shower, ruang uap, dan ruang santai untuk melepas lelah.</p>
+                    </div>
+            
+                    <div class="benefit-card">
+                        <h3>Hak Istimewa Member</h3>
+                        <p>Diskon eksklusif dan penawaran khusus dari mitra gym kami.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-container" style="max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <h2 style="margin-bottom: 20px;">Form Member</h2>
+                <form action="{{ route('member.store') }}" method="POST">
+                    @csrf
+                    <div style="display: grid; gap: 15px;">
+                        <input type="text" name="nama" placeholder="Nama Member" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <input type="email" name="email" placeholder="Email" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <input type="text" name="hp" placeholder="Nomor HP" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <input type="number" name="usia" placeholder="Usia" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                            <input type="date" name="tgl_lahir" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        </div>
+        
+                        <select name="layanan" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                            <option value="">Pilih Layanan</option>
+                            <option value="basic">Basic</option>
+                            <option value="premium">Premium</option>
+                            <option value="vip">VIP</option>
+                        </select>
+        
+                        <button type="submit" style="background:#810100; color:white; border:none; padding:12px; border-radius:10px; cursor:pointer; font-weight:bold;">
+                            Daftar Member
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </body>
+    </main>
+        {{-- Footer --}}
+        <footer style="background-color: #1B1717 !important; color: #EDEBDD !important; padding: 40px 80px; font-family: 'Poppins', sans-serif; margin-top: 60px; display: block; clear: both;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; max-width: 1200px; margin: 0 auto;">
+                
+                <div style="flex: 1; min-width: 200px;">
+                    <h3 style="color: #EDEBDD !important; font-size: 18px; font-weight: 600; margin-bottom: 15px; font-family: 'Poppins', sans-serif;">GlowFit Gym</h3>
+                    <p style="color: #EDEBDD !important; font-size: 14px; line-height: 1.6; opacity: 0.8; font-family: 'Poppins', sans-serif;">Fitness Membership System</p>
+                </div>
+    
+                <div style="flex: 1; min-width: 200px;">
+                    <h3 style="color: #EDEBDD !important; font-size: 18px; font-weight: 600; margin-bottom: 15px; font-family: 'Poppins', sans-serif;">Menu</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                        <li><a href="{{ route('dashboard') }}" style="color: #EDEBDD !important; text-decoration: none; font-size: 14px; opacity: 0.8; font-family: 'Poppins', sans-serif;">Beranda</a></li>
+                        <li><a href="#" style="color: #EDEBDD !important; text-decoration: none; font-size: 14px; opacity: 0.8; font-family: 'Poppins', sans-serif;">Paket Membership</a></li>
+                        <li><a href="#" style="color: #EDEBDD !important; text-decoration: none; font-size: 14px; opacity: 0.8; font-family: 'Poppins', sans-serif;">Kelas GLOWFIT</a></li>
+                        <li><a href="#" style="color: #EDEBDD !important; text-decoration: none; font-size: 14px; opacity: 0.8; font-family: 'Poppins', sans-serif;">Kontak</a></li>
+                    </ul>
+                </div>
+    
+                <div style="flex: 1; min-width: 200px;">
+                    <h3 style="color: #EDEBDD !important; font-size: 18px; font-weight: 600; margin-bottom: 15px; font-family: 'Poppins', sans-serif;">Contact</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                        <li style="display: flex; align-items: center; gap: 10px; color: #EDEBDD !important; font-size: 14px; opacity: 0.8; font-family: 'Poppins', sans-serif;">
+                            📧 glowfit.gym@gmail.com
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 10px; color: #EDEBDD !important; font-size: 14px; opacity: 0.8; font-family: 'Poppins', sans-serif;">
+                            📸 @glowfit
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 10px; color: #EDEBDD !important; font-size: 14px; opacity: 0.8; font-family: 'Poppins', sans-serif;">
+                            💬 0812345678
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+</body>
 </html>

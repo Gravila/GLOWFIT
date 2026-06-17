@@ -1,0 +1,277 @@
+/* ==========================================================================
+   STYLE LOGIN GLOWFIT GYM (SPLIT SCREEN PATTERN)
+   ========================================================================== */
+
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #1B1717;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Container Utama Split Screen */
+.login-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* ─── SISI KIRI: BRANDING GAMBAR BACKGROUND ─── */
+.login-branding {
+    flex: 1;
+    position: relative;
+    /* Menggunakan asset gambar latar gym kamu */
+    background-image: url('../image/gymlogin.png'); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding: 60px;
+}
+
+/* Overlay Gelap Estetis Daun/Gym murni dari CSS */
+.branding-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(27, 23, 23, 0.45) 0%, rgba(129, 1, 0, 0.75) 100%);
+    z-index: 1;
+}
+
+.branding-content {
+    position: relative;
+    z-index: 2;
+    color: #EDEBDD;
+}
+
+.login-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 25px;
+    display: block;
+}
+
+.branding-content h2 {
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.branding-content p {
+    font-size: 14px;
+    opacity: 0.85;
+    max-width: 440px;
+    line-height: 1.6;
+}
+
+/* ─── SISI KANAN: FORM SECTION ─── */
+.login-form-section {
+    flex: 1;
+    background-color: #1F1B1B; /* Sesuai tone gelap image_3b9b48 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.login-form-wrapper {
+    width: 100%;
+    max-width: 380px;
+}
+
+.form-header {
+    margin-bottom: 35px;
+}
+
+.form-header h3 {
+    color: #EDEBDD;
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+}
+
+.form-header p {
+    color: #888;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   PERBAIKAN INPUT FORM & WARNA TEKS (OVERRIDE SYSTEM)
+   ========================================================================== */
+
+/* Pastikan box pembungkus input mengambil 100% space */
+.form-group {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    color: #EDEBDD !important; /* Memastikan label tetap warna krem terang */
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+/* 🌟 PERBAIKAN UTAMA INPUT: Menghilangkan background putih & melebarkan ukuran */
+.form-group input {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 12px 4px !important;
+    background: transparent !important; /* Paksa hilangkan kotak warna putih */
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid #444444 !important; /* Tebalkan garis bawah default */
+    color: #ffffff !important; /* Warna teks ketikan wajib putih */
+    font-size: 15px !important;
+    outline: none !important;
+    box-shadow: none !important; /* Hilangkan shadow kotak bawaan */
+    border-radius: 0px !important; /* Hilangkan lengkungan jika ada */
+    transition: border-color 0.3s ease;
+    display: block;
+}
+
+/* Garis bawah berubah merah maroon GlowFit saat diklik/aktif */
+.form-group input:focus {
+    border-bottom: 2px solid #810100 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Warna teks placeholder */
+.form-group input::placeholder {
+    color: #666666 !important;
+}
+
+
+/* 🌟 PERBAIKAN WARNA OPSI: Dibuat putih terang agar terbaca di background hitam */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    font-size: 13px;
+    width: 100%;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    color: #EDEBDD !important; /* Diubah dari abu-abu ke krem terang */
+    cursor: pointer;
+    user-select: none;
+}
+
+.remember-me input {
+    margin-right: 8px;
+    accent-color: #810100 !important;
+    width: auto !important; /* Mencegah checkbox ikut melebar full screen */
+    display: inline-block !important;
+}
+
+.forgot-link {
+    color: #EDEBDD !important; /* Diubah dari abu-abu ke krem terang agar kontras */
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s ease;
+}
+
+.forgot-link:hover {
+    color: #810100 !important; /* Efek hover merah maroon */
+    text-decoration: underline;
+}
+
+/* Tombol Login Hitam Solid Tegas */
+.btn-login-submit {
+    width: 100%;
+    background: #000000; 
+    color: #ffffff;
+    border: 1px solid #222;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-login-submit:hover {
+    background: #810100; /* Transisi warna ke Maroon GlowFit saat diarahkan mouse */
+    border-color: #810100;
+    box-shadow: 0 5px 15px rgba(129, 1, 0, 0.3);
+}
+
+/* Bagian Bawah Form */
+.form-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 13px;
+    color: #888;
+}
+
+.form-footer a {
+    color: #EDEBDD;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-footer a:hover {
+    color: #810100;
+}
+
+/* Penanganan Error Validasi Laravel */
+.error-msg {
+    color: #ff4d4d;
+    font-size: 12px;
+    display: block;
+    margin-top: 6px;
+}
+
+/* ─── MEDIA QUERY: RESPONSIVE HP ─── */
+@media (max-width: 768px) {
+    .login-branding {
+        display: none; /* Sembunyikan panel gambar kiri jika dibuka lewat layar HP */
+    }
+    .login-form-section {
+        padding: 20px;
+    }
+}
+
+/* ==========================================================================
+   TRIK KHUSUS UNTUK MEMATIKAN WARNA AUTOFILL BROWSER CHROME
+   ========================================================================== */
+
+   input:-webkit-autofill,
+   input:-webkit-autofill:hover, 
+   input:-webkit-autofill:focus, 
+   input:-webkit-autofill:active {
+       /* Menghilangkan background bawaan Chrome dengan memanfaatkan shadow internal */
+       -webkit-box-shadow: 0 0 0 30px #1F1B1B inset !important; /* Warna #1F1B1B disamakan dengan warna background form kanan kamu */
+       
+       /* Memaksa warna teks ketikan di dalam autofill tetap putih */
+       -webkit-text-fill-color: #ffffff !important;
+       
+       /* Menjaga transisi font agar tidak berubah */
+       transition: background-color 5000s ease-in-out 0s;
+   }
+
+   /* Styling untuk komponen error bawaan Laravel Breeze */
+.error-msg, .text-red-600, ul[class*="text-red-600"] {
+    color: #ff4d4d !important;
+    font-size: 12px !important;
+    list-style: none !important;
+    margin-top: 6px !important;
+    padding-left: 0 !important;
+    text-align: left !important;
+}
