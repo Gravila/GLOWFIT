@@ -14,14 +14,18 @@ class CekAdmin
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next)
-    {
-        // Jika user login DAN role-nya adalah 'admin', izinkan masuk
-        if (Auth::check() && Auth::user()->role === 'user') {
-            return $next($request); 
-        }
-    
-        // Jika bukan admin, tendang ke dashboard biasa (bukan ke area admin)
-        return redirect('/dashboard')->with('error', 'Akses ditolak!');
+    public function handle($request, Closure $next)
+{
+    // Jika tidak login, tendang ke halaman login
+    if (!Auth::check()) {
+        return redirect('/login');
     }
+
+    // Jika sudah login tapi bukan admin, tendang ke dashboard biasa
+    if (Auth::user()->role !== 'admin') {
+        return redirect('/dashboard')->with('error', 'Anda bukan admin!');
+    }
+
+    return $next($request);
+}
 }

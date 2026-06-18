@@ -33,13 +33,13 @@ class AuthenticatedSessionController extends Controller
 // 3. LOGIKA REDIRECT BERDASARKAN ROLE
 // Kita cek apakah user yang login punya role 'admin'
     if (Auth::user()->role === 'admin') {
-        return redirect()->intended('Admin.dashboardadmin'); // Admin ke dashboard admin
+        return redirect()->intended('/admin/dashboardadmin'); // Admin ke dashboard admin
     }
 
 // Jika bukan admin (member/user), arahkan ke dashboard member/beranda
     return redirect()->intended('/dashboard');
     }
-    
+
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
