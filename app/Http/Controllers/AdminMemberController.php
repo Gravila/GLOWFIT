@@ -18,7 +18,6 @@ class AdminMemberController extends Controller
     
         // Filter Durasi
         if ($request->filled('durasi')) {
-            // Asumsi kolom di DB menyimpan angka atau string yang mengandung angka
             $query->where('durasi_kontrak', 'LIKE', '%' . $request->durasi . '%');
         }
     

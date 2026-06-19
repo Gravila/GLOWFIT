@@ -9,15 +9,15 @@ class BookingController extends Controller
 {
     public function store(Request $request)
 {
-    // 1. Cari member berdasarkan kode yang diinput
+    // Cari member berdasarkan kode yang diinput
     $member = DB::table('members')->where('kode_member', $request->kode_member)->first();
 
-    // 2. Cek apakah member ditemukan
+    // Cek apakah member ditemukan
     if (!$member) {
         return back()->with('error', 'Kode Member tidak ditemukan!');
     }
 
-    // 3. Simpan data ke tabel member_kelas
+    // Simpan data ke tabel member_kelas
     DB::table('member_kelas')->insert([
         'member_id' => $member->id,
         'kelas_gym_id' => $request->kelas_id,
@@ -25,7 +25,7 @@ class BookingController extends Controller
         'updated_at' => now()
     ]);
 
-    // 4. Kembali ke halaman sebelumnya dengan pesan sukses
+    // Kembali ke halaman sebelumnya dengan pesan sukses
     return back()->with('success', 'Booking berhasil dilakukan!');
 }
 

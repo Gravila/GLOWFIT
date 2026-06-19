@@ -61,9 +61,9 @@
   
  /* HERO */
 .hero {
-  margin-top: 0 !important; /* 🌟 Hapus margin agar gambar naik penuh ke atas */
-  padding-top: 100px !important; /* 🌟 Berikan padding atas agar teks "BUILD YOUR DREAM BODY" tidak tertutup Navbar */
-  min-height: 70vh !important; /* Sedikit dinaikkan tingginya agar lebih proporsional */
+  margin-top: 0 !important; 
+  padding-top: 100px !important; 
+  min-height: 70vh !important;
 
   background:
     linear-gradient(rgba(27,23,23,0.6), rgba(27,23,23,0.7)),
@@ -88,12 +88,10 @@
     display:flex;
     gap:20px;
     padding:30px;
-    align-items:flex-start; /* 🔥 penting */
+    align-items:flex-start; 
   }
-  
-/* Tambahkan di style.css */
+
 .content {
-  /* Angka 100px ini sesuaikan dengan tinggi navbar kamu */
   padding-top: 100px; 
   min-height: 80vh; /* Agar footer tetap di bawah */
 }
@@ -106,7 +104,7 @@
   justify-content: space-between !important;
   flex-wrap: wrap !important;
   
-  /* 🌟 Tambahan: Memicu animasi fadeUp saat halaman dibuka */
+ 
   animation: fadeUp 0.8s ease-out both; 
 }
 
@@ -121,7 +119,7 @@
   padding: 0 !important;          
   padding-bottom: 15px !important; 
   
-  /* 🌟 Tambahan: Properti dasar untuk efek melayang */
+
   position: relative !important;
   top: 0;
   transition: all 0.3s ease-in-out !important; 
@@ -135,7 +133,6 @@
   margin: 0 !important;
   padding: 0 !important;
   
-  /* 🌟 Tambahan: Agar efek zoom gambar berjalan mulus */
   transition: transform 0.4s ease-in-out !important; 
 }
 
@@ -149,9 +146,7 @@
   color: #666;
 }
 
-/* ===================================================
- 🌟 TAMBAHKAN HOVER KELAS INI TEPAT DI BAWAHNYA 
- =================================================== */
+
 .card:hover {
   top: -10px !important; /* Kartu melayang naik */
   box-shadow: 0 12px 22px rgba(0,0,0,0.15) !important; /* Bayangan menebal */
@@ -815,7 +810,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 40px;
-    margin-top: 70px;    /* 🌟 Ditinggikan dari 40px ke 70px agar tidak mepet dengan Rekomendasi Kelas */
+    margin-top: 70px;    
     margin-bottom: 60px; /* Jarak aman sebelum section testimoni */
     padding: 20px 0;
 }
@@ -847,7 +842,7 @@
     display: block;
 }
 
-/* 🌟 Perbaikan Tombol: Ditambahkan z-index dan display proper agar tidak tenggelam */
+
 .btn-progres-cta {
     display: inline-block !important;
     position: relative;

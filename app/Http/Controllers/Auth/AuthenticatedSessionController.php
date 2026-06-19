@@ -24,14 +24,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-    // 1. Proses autentikasi bawaan Laravel
+
         $request->authenticate();
 
-    // 2. Regenerate session untuk keamanan
+
         $request->session()->regenerate();
 
-// 3. LOGIKA REDIRECT BERDASARKAN ROLE
-// Kita cek apakah user yang login punya role 'admin'
+
     if (Auth::user()->role === 'admin') {
         return redirect()->intended('/admin/dashboardadmin'); // Admin ke dashboard admin
     }

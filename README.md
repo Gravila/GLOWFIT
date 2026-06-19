@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<!-- <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
@@ -55,4 +55,64 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT). -->
+
+# GLOWFIT GYM
+
+🏋️ GLOWFIT GYM - Sistem Membership Gym Berbasis Website
+GlowFit Gym adalah sistem informasi manajemen berbasis web yang dirancang untuk mendigitalisasi operasional pusat kebugaran. Sistem ini dibangun untuk mengatasi kendala pendataan manual dan memberikan solusi yang efisien, responsif, dan terintegrasi bagi pengelola gym maupun member.
+
+Website ini dikembangkan untuk memenuhi syarat unjuk kerja pada Ujian Akhir Semester (UAS) mata kuliah Pemrograman Berbasis Web.
+Dibuat oleh: Gravila Meliana S(NIM: 242410101050)
+Program Studi: Sistem Informasi
+Fakultas: Fakultas Ilmu Komputer, Universitas Jember
+Video Demo: https://youtu.be/wE2L8WUXH1s  
+
+📑 Daftar Isi
+Fitur Utama
+Keunggulan Sistem
+Panduan Instalasi & Menjalankan Website
+
+## Fitur Utama
+✨ Fitur Utama
+👤 Untuk Member (Pelanggan)
+Beranda: Halaman pembuka yang menyajikan ringkasan informasi mengenai Glowfit Gym, berisi rekomendasi kelas dan informasi untuk mendaftar membership.
+Paket Membership: Katalog pilihan paket langganan (Basic, VIP, Platinum) di mana member dapat membandingkan fasilitas dan mendaftar sebagai member.
+Kelas GlowFit: Jendela informasi seluruh sesi latihan (seperti Yoga, Zumba, jadwal Practice Trainer), di mana member dapat melihat jadwal harian dan melakukan reservasi slot secara real-time dengan bantuan AJAX tanpa reload halaman.
+Kontak: Portal komunikasi yang mengintegrasikan shortcut langsung ke layanan Customer Service via WhatsApp.
+Pengaturan Tampilan: Pengguna dapat mengubah visual halaman menjadi Dark Mode atau Light Mode serta mengatur ukuran font yang tersimpan melalui cookies.
+
+👑 Untuk Administrator (Admin)
+Beranda (Dasbor): Pusat kendali untuk memantau data krusial seperti total member, okupansi kelas, kelas aktif, dan total pendapatan.
+Member: Modul pengelolaan data keanggotaan mencakup identitas, detail layanan, informasi finansial, serta status keanggotaan (Aktif/Tidak Aktif) yang dapat dikelola via dropdown. Dilengkapi fitur Filter Data berdasarkan layanan/durasi serta tombol Reset.
+Kelas GlowFit: Pusat pengaturan jadwal sesi latihan. Admin dapat mengelola Nama Kelas, Hari, Jam, serta melakukan aksi Edit dan Hapus pada data jadwal. Terdapat fitur Filter Kelas untuk mempermudah navigasi data.  
+
+🎯 Keunggulan Sistem
+Teknologi AJAX: Implementasi komunikasi asinkronus pada fitur booking kelas dan pencarian data untuk memberikan pengalaman real-time tanpa reload halaman.
+Keamanan Terpadu: Penggunaan session untuk autentikasi admin agar sistem tetap aman dari akses tidak sah.
+Modularitas: Arsitektur MVC (Model-View-Controller) dengan framework Laravel untuk memisahkan logika bisnis, data, dan tampilan. 
+
+## Panduan Instalasi
+1. Kloning Repositori
+
+git clone <URL_REPOSITORI_GITHUB_ANDA>
+cd glowfit-gym
+
+2.  **Instalasi Dependensi**
+    ```bash
+composer install
+npm install
+
+3. DB_CONNECTION=sqlite
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+
+4.  **Migrasi & Key**
+    ```bash
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+
